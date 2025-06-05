@@ -1,0 +1,18 @@
+# Node
+node_modules/
+.env
+
+# Firebase
+serviceAccountKey.json
+
+# Vercel
+.vercel/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Sistema
+.DS_Store
+Thumbs.db
