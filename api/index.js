@@ -5,7 +5,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.post('/', (req, res) => {
+app.post('/api/analizarUsuario', (req, res) => {
   const texto = req.body.texto || '';
 
   if (!texto || texto.trim().length < 5) {
