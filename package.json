@@ -1,18 +1,26 @@
 {
   "name": "nexus-backend-vercel",
   "version": "1.0.0",
+  "description": "Backend Express para Nexus Bionic desplegado en Vercel",
   "main": "api/index.js",
   "scripts": {
-    "dev": "node api/index.js",
-    "start": "node api/index.js"
+    "dev": "node local-server.js",
+    "start": "node local-server.js",
+    "test": "node test-analizarUsuario.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "Backend Express para Nexus Bionic desplegado en Vercel",
+  "keywords": ["nexus", "bionic", "backend", "vercel", "express"],
+  "author": "Nexus Bionic",
+  "license": "MIT",
   "dependencies": {
+    "axios": "^1.10.0",
     "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
     "express": "^5.1.0",
-    "firebase-admin": "^13.4.0"
+    "firebase-admin": "^13.4.0",
+    "node-fetch": "^3.3.2",
+    "openai": "^5.3.0"
+  },
+  "engines": {
+    "node": ">=18"
   }
 }

@@ -1,5 +1,4 @@
 @echo off
-cd /d C:\NexusBionic\nexus-backend-vercel
-echo Iniciando backend Express...
-npm run dev
+echo Iniciando backend local...
+node local-server.js
 pause

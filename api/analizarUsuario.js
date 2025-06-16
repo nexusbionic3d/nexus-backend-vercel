@@ -1,7 +1,11 @@
-require('dotenv').config();
-const admin = require('firebase-admin');
-const { getFirestore } = require('firebase-admin/firestore');
-const fetch = require('node-fetch');
+// api/analizarUsuario.js
+
+import express from 'express';
+import cors from 'cors';
+import 'dotenv/config';
+import admin from 'firebase-admin';
+import { getFirestore } from 'firebase-admin/firestore';
+import fetch from 'node-fetch';
 
 if (!admin.apps.length) {
   const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
@@ -72,11 +76,16 @@ const analizarConHuggingFace = async (texto, usuarioId) => {
   return JSON.parse(jsonString);
 };
 
-module.exports = async function handler(req, res) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Método no permitido' });
-  }
+const app = express();
 
+app.use(cors({
+  origin: 'https://nexus-bionic-frontend.vercel.app', // Ajusta a tu frontend
+  methods: ['POST'],
+}));
+
+app.use(express.json());
+
+app.post('/api/analizarUsuario', async (req, res) => {
   const { texto, usuarioId } = req.body;
 
   if (!texto || !usuarioId) {
@@ -86,16 +95,18 @@ module.exports = async function handler(req, res) {
   try {
     const resultado = await analizarConHuggingFace(texto, usuarioId);
 
-    // Guardar resultado en Firestore si deseas:
+    // Opcional: guarda resultado en Firestore
     // await db.collection('analisis').add({ usuarioId, texto, resultado, fecha: new Date() });
 
     return res.json({
       mensaje: "Texto analizado correctamente",
       resultado,
-      fecha: new Date().toLocaleString(),
+      fecha: new Date().toISOString(),
     });
   } catch (error) {
     console.error("Error en analizarUsuario:", error);
     return res.status(500).json({ error: error.message || "Error interno del servidor" });
   }
-};
+});
+
+export default app;

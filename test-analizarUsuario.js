@@ -1,20 +1,26 @@
 const axios = require('axios');
 
-async function probarAnalisis() {
+const ejecutarTest = async () => {
   try {
     const response = await axios.post('http://localhost:3000/api/analizarUsuario', {
-      texto: 'Este es un texto de prueba para Nexus Bionic.'
+      texto: "Últimamente me siento sin energía y me cuesta concentrarme. No he dormido bien por el trabajo y me duele el cuello.",
+      usuarioId: "usuario123"
     });
 
-    console.log('Respuesta del servidor:');
-    console.log(response.data);
+    console.log("✅ Respuesta exitosa del backend:");
+    console.log(JSON.stringify(response.data, null, 2));
   } catch (error) {
+    console.error("❌ Error al hacer la solicitud:");
+
     if (error.response) {
-      console.error('Error en respuesta del servidor:', error.response.data);
+      console.error("Código:", error.response.status);
+      console.error("Detalles:", error.response.data);
+    } else if (error.request) {
+      console.error("No hubo respuesta del servidor. Verifica que esté corriendo.");
     } else {
-      console.error('Error al conectar con el servidor:', error.message);
+      console.error("Error desconocido:", error.message);
     }
   }
-}
+};
 
-probarAnalisis();
+ejecutarTest();
