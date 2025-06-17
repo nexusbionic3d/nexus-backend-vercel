@@ -10,7 +10,7 @@ if (!process.env.FIREBASE_SERVICE_ACCOUNT) {
 
 const serviceAccountRaw = process.env.FIREBASE_SERVICE_ACCOUNT;
 const serviceAccount = JSON.parse(serviceAccountRaw);
-serviceAccount.private_key = serviceAccount.private_key.replace(/\\n/g, '\n');
+serviceAccount.private_key = serviceAccount.private_key.;
 
 if (!getApps().length) {
   initializeApp({

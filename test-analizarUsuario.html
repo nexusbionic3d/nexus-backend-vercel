@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Test API - analizarUsuario</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 600px;
+      margin: 40px auto;
+    }
+    textarea, input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      font-size: 1rem;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 1rem;
+      background-color: #0070f3;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0059c1;
+    }
+    #resultado {
+      margin-top: 20px;
+      background: #f1f1f1;
+      padding: 10px;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Test de la API <code>analizarUsuario</code></h1>
+
+  <label for="usuarioId">Usuario ID:</label>
+  <input type="text" id="usuarioId" value="UWT54o00j9P4UiyQomvu" />
+
+  <label for="texto">Texto de análisis:</label>
+  <textarea id="texto" rows="4">tengo molestias en el abductor</textarea>
+
+  <button onclick="enviar()">Analizar</button>
+
+  <div id="resultado">Esperando solicitud...</div>
+
+  <script>
+    async function enviar() {
+      const usuarioId = document.getElementById("usuarioId").value.trim();
+      const texto = document.getElementById("texto").value.trim();
+      const resultado = document.getElementById("resultado");
+
+      resultado.textContent = "Enviando solicitud...";
+
+      try {
+        const respuesta = await fetch("https://nexus-backend-vercel.vercel.app/api/analizarUsuario", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ usuarioId, texto })
+        });
+
+        const data = await respuesta.json();
+        console.log("Respuesta:", data);
+        resultado.textContent = JSON.stringify(data, null, 2);
+      } catch (error) {
+        console.error("Error:", error);
+        resultado.textContent = "Error en la solicitud: " + error.message;
+      }
+    }
+  </script>
+
+</body>
+</html>
