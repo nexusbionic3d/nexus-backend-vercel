@@ -10,7 +10,9 @@ if (!process.env.FIREBASE_SERVICE_ACCOUNT) {
 
 const serviceAccountRaw = process.env.FIREBASE_SERVICE_ACCOUNT;
 const serviceAccount = JSON.parse(serviceAccountRaw);
-serviceAccount.private_key = serviceAccount.private_key.;
+
+// Corrige los saltos de línea escapados en private_key
+serviceAccount.private_key = serviceAccount.private_key.replace(/\\n/g, '\n');
 
 if (!getApps().length) {
   initializeApp({
