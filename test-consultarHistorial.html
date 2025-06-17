@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Consultar Historial PIU</title>
+</head>
+<body>
+  <h2>Consulta del Historial del Usuario</h2>
+  <label>Usuario ID:</label><br>
+  <input id="usuarioId" value="UWT54o00j9P4UiyQomvu" size="40"/><br><br>
+  <button onclick="consultar()">Consultar Historial</button>
+  <pre id="respuesta"></pre>
+
+  <script>
+    async function consultar() {
+      const usuarioId = document.getElementById('usuarioId').value;
+      const res = await fetch(`https://nexus-backend-vercel.vercel.app/api/consultarHistorial?usuarioId=${usuarioId}`);
+      const data = await res.json();
+      document.getElementById('respuesta').textContent = JSON.stringify(data, null, 2);
+    }
+  </script>
+</body>
+</html>
