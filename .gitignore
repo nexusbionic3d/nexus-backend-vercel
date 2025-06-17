@@ -7,6 +7,10 @@ npm-debug.log*
 # Firebase (clave antigua, precaución si la usas en desarrollo)
 serviceAccountKey.json
 
+# Claves y credenciales sensibles
+credentials/
+*.json
+
 # Vercel
 .vercel/
 

@@ -1,26 +1,34 @@
-const axios = require('axios');
+import fetch from 'node-fetch';
 
-const ejecutarTest = async () => {
-  try {
-    const response = await axios.post('http://localhost:3000/api/analizarUsuario', {
-      texto: "Últimamente me siento sin energía y me cuesta concentrarme. No he dormido bien por el trabajo y me duele el cuello.",
-      usuarioId: "usuario123"
-    });
+const url = 'http://localhost:3000/api/analizarUsuario';
 
-    console.log("✅ Respuesta exitosa del backend:");
-    console.log(JSON.stringify(response.data, null, 2));
-  } catch (error) {
-    console.error("❌ Error al hacer la solicitud:");
-
-    if (error.response) {
-      console.error("Código:", error.response.status);
-      console.error("Detalles:", error.response.data);
-    } else if (error.request) {
-      console.error("No hubo respuesta del servidor. Verifica que esté corriendo.");
-    } else {
-      console.error("Error desconocido:", error.message);
-    }
-  }
+const data = {
+  texto: 'Tengo molestias en el hombro derecho',
+  usuarioId: 'usuario123',
 };
 
-ejecutarTest();
+async function testAnalizarUsuario() {
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      console.error(`Error en la respuesta: ${response.status} ${response.statusText}`);
+      const errorData = await response.json();
+      console.error(errorData);
+      return;
+    }
+
+    const json = await response.json();
+    console.log('Respuesta del servidor:', json);
+  } catch (error) {
+    console.error('Error al hacer la petición:', error);
+  }
+}
+
+testAnalizarUsuario();
